@@ -1,0 +1,19 @@
+
+   <mat-card>
+    <mat-toolbar color="primary">Chatbot IA</mat-toolbar>
+  
+    <div *ngFor="let message of messages" class="chat-message" [ngClass]="{'user': message.sender === 'user', 'bot': message.sender === 'bot'}">
+      <mat-card>
+        <p>{{ message.text }}</p>
+      </mat-card>
+    </div>
+  
+    <div class="input-container">
+      <mat-form-field class="full-width">
+        <mat-label>Escribe tu mensaje</mat-label>
+        <input matInput [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="sendMessage()">Enviar</button>
+    </div>
+  </mat-card>
+  
