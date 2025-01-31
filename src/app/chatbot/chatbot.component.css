@@ -77,4 +77,23 @@
   .full-width {
     width: 100%;
   }
+  .full-width {
+    width: 100%;
+  }
+  
+  .upload-container {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .image-preview {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+  }
   

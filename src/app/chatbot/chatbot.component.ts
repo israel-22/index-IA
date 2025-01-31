@@ -18,6 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
 export class ChatbotComponent {
   userInput: string = '';
   messages: { text: string; sender: 'user' | 'bot' }[] = [];
+  selectedFile: File | null = null;
+  imagePreview: string | null = null;
 
   responses: { [key: string]: string } = {
     "hola": "¡Hola! ¿En qué puedo ayudarte?",
@@ -31,6 +33,7 @@ export class ChatbotComponent {
 
     const userMessage = this.userInput.toLowerCase();
     this.messages.push({ text: this.userInput, sender: 'user' });
+    this.userInput = '';
 
     const response = this.responses[userMessage] || this.responses["default"];
     setTimeout(() => {
@@ -39,4 +42,31 @@ export class ChatbotComponent {
 
     this.userInput = '';
   }
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+  
+    if (file) {
+      this.selectedFile = file;
+  
+      // Mostrar vista previa de la imagen
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file); // Aseguramos que file no es null aquí
+    }
+  }
+  
+
+  uploadImage() {
+    if (this.selectedFile) {
+      console.log('Imagen subida:', this.selectedFile.name);
+      this.messages.push({ sender: 'user', text: `Imagen subida: ${this.selectedFile.name}` });
+      this.selectedFile = null;
+      this.imagePreview = null;
+    }
+  }
 }
+
+
+

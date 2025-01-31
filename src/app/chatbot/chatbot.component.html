@@ -15,5 +15,21 @@
       </mat-form-field>
       <button mat-raised-button color="primary" (click)="sendMessage()">Enviar</button>
     </div>
+  
+    <!-- Apartado para subir imágenes -->
+    <div class="upload-container">
+      <p>Sube una imagen:</p>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*">
+      <button mat-raised-button color="accent" (click)="uploadImage()" [disabled]="!selectedFile">
+        <mat-icon>cloud_upload</mat-icon> Cargar Imagen
+      </button>
+    </div>
+  
+    <!-- Vista previa de la imagen subida -->
+    <div *ngIf="imagePreview">
+      <p>Vista previa:</p>
+      <img [src]="imagePreview" alt="Imagen subida" class="image-preview">
+    </div>
+  
   </mat-card>
   
