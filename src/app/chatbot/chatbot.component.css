@@ -96,4 +96,38 @@
     border: 1px solid #ccc;
     padding: 5px;
   }
-  
+  .mi-boton-personalizado {
+    width: 18%;
+    padding: 5px;
+    background: #007bff !important;
+    color: white !important;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button[mat-raised-button][color="accent"] {
+    width: 18%;
+    padding: 5px;
+    background: #ff4081; /* Color "accent" predeterminado de Angular Material */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px; /* Espaciado entre el icono y el texto */
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+}
+
+button[mat-raised-button][color="accent"]:hover {
+    background: #f50057; /* Un tono más oscuro al pasar el mouse */
+}
+
+button[mat-raised-button][color="accent"]:disabled {
+    background: #7fe784;
+    color: black; /* Texto en gris cuando está deshabilitado */
+    cursor: not-allowed;
+
+}

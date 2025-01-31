@@ -23,8 +23,10 @@ export class ChatbotComponent {
 
   responses: { [key: string]: string } = {
     "hola": "¡Hola! ¿En qué puedo ayudarte?",
-    "cómo estás": "Soy un chatbot, ¡pero estoy aquí para ayudarte!",
-    "adiós": "Hasta luego, que tengas un buen día.",
+    "cómo estás": " Estoy bien, gracias por preguntar. Soy un chatbot, ¡pero estoy aquí para ayudarte!",
+    "como estas": "Soy un chatbot, ¡pero estoy aquí para ayudarte!",
+    "adiós" : "Hasta luego, que tengas un buen día.",
+    "adios" : "Hasta luego, que tengas un buen día.",
     "default": "No entiendo tu pregunta, intenta con otra."
   };
 

@@ -13,14 +13,15 @@
         <mat-label>Escribe tu mensaje</mat-label>
         <input matInput [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="sendMessage()">Enviar</button>
+      <button mat-raised-button color="primary" class="mi-boton-personalizado" (click)="sendMessage()">Enviar</button>
+
     </div>
   
     <!-- Apartado para subir imágenes -->
     <div class="upload-container">
       <p>Sube una imagen:</p>
       <input type="file" (change)="onFileSelected($event)" accept="image/*">
-      <button mat-raised-button color="accent" (click)="uploadImage()" [disabled]="!selectedFile">
+      <button mat-raised-button color="accent"  (click)="uploadImage()" [disabled]="!selectedFile">
         <mat-icon>cloud_upload</mat-icon> Cargar Imagen
       </button>
     </div>
