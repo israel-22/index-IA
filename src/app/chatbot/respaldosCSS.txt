@@ -1,0 +1,68 @@
+.upload-container {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.upload-container p {
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="file"] {
+    display: none; /* Ocultamos el input nativo */
+}
+
+.upload-label {
+    padding: 8px 12px;
+    background-color: #ff4081; /* Color 'accent' de Angular Material */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: background 0.3s ease-in-out;
+}
+
+.upload-label:hover {
+    background-color: #d81b60; /* Tono más oscuro al pasar el mouse */
+}
+
+button[mat-raised-button][color="accent"] {
+    width: auto;
+    padding: 8px 12px;
+    background: #ff4081; /* Mantiene el color 'accent' */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+}
+
+button[mat-raised-button][color="accent"]:hover {
+    background: #d81b60; /* Un tono más oscuro al pasar el mouse */
+}
+
+button[mat-raised-button][color="accent"]:disabled {
+    background: #bdbdbd; /* Gris neutro en estado deshabilitado */
+    color: #757575;
+    cursor: not-allowed;
+}
+
+.image-preview {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    padding: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}

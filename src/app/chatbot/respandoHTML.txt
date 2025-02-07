@@ -1,0 +1,48 @@
+
+   <mat-card class="chatbot-card">
+    <mat-toolbar color="primary">Chatbot IA</mat-toolbar>
+  
+    <div *ngFor="let message of messages" class="chat-message" [ngClass]="{'user': message.sender === 'user', 'bot': message.sender === 'bot'}">
+      <mat-card>
+        <p>{{ message.text }}</p>
+      </mat-card>
+    </div>
+  
+    <div class="input-container">
+      <mat-form-field class="full-width">
+        <mat-label>Escribe tu mensaje</mat-label>
+        <input matInput [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="mi-boton-personalizado" (click)="sendMessage()">Enviar</button>
+
+    </div>
+  
+   <!-- Apartado para subir imágenes y cargar su nombre -->
+<div class="upload-container">
+  <p>📷 Sube una imagen divertida:</p>
+  
+  <label class="upload-label">
+    <mat-icon>cloud_upload</mat-icon> Seleccionar Imagen
+    <input type="file" (change)="onFileSelected($event)" accept="image/*">
+  </label>
+
+  <button class="upload-btn" mat-raised-button (click)="uploadImage()" [disabled]="!selectedFile">
+    <mat-icon>file_upload</mat-icon> Cargar Imagen
+  </button>
+
+  <!-- Mostrar el nombre y tipo de archivo seleccionado -->
+  <div *ngIf="selectedFile">
+    <p>📄 Archivo seleccionado:</p>
+    <p class="file-info">{{ selectedFileName }} ({{ selectedFileType }})</p>
+  </div>
+</div>
+
+<!-- Vista previa de la imagen subida -->
+<div *ngIf="imagePreview" style="text-align: center;">
+  <p style="color: aliceblue;"> 🎨 Vista previa:</p>
+  <img [src]="imagePreview" alt="Imagen subida" class="image-preview">
+</div>
+  
+  </mat-card>
+ 
+  
