@@ -31,12 +31,18 @@ export class ChatbotComponent  {
     "como estas": "Soy un chatbot, ¡pero estoy aquí para ayudarte!",
     "que puedes hacer": "Puedo responder a preguntas de salud, como 'hola', 'cómo estás', 'adiós' o 'adios'.",
     "quien eres":"Soy tu papi chatbot, jajajajaja!!!! No, solo soy tu papi chatbot",
-    "estas vivo":"Solo en tu corazon guapo, tu papi chatbot es el mejor de todos tus panas, niñ@ rata :)",  
+    "estas vivo":"Solo en tu corazon guapo, tu papi chatbot es el mejor de todos tus panas, niñ@ rata :)",
     "adiós" : "Hasta luego, que tengas un buen día.",
     "adios" : "Hasta luego, que tengas un buen día.",
+    "hola guapo": "Como esta mi rey, cuentame mijo en que te ayudo:) ",
     "te quiero":"te lo agradesco mucho, pero te recomiendo visitar un Psiquiatra, hay cuatro sanatorios serca de ti",
     "default": "No entiendo tu pregunta, intenta con otra."
   };
+
+  private isRecording: boolean = false;
+  private recognition: any;
+  private isRecognizing: boolean = false;
+  private visionModelActive: string | null = null;
 
   sendMessage() {
     if (this.userInput.trim() === '') return;
@@ -56,12 +62,12 @@ export class ChatbotComponent  {
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
-  
+
     if (file) {
       this.selectedFile = file;
       this.selectedFileName = file.name;
       this.selectedFileType = file.type;
-  
+
       // Mostrar vista previa de la imagen
       const reader = new FileReader();
       reader.onload = () => {
@@ -78,6 +84,25 @@ export class ChatbotComponent  {
       this.selectedFile = null;
       this.imagePreview = null;
     }
+  }
+
+  toggleRecording() {
+    const recordButton = document.getElementById('recordButton') as HTMLButtonElement;
+
+    if (!this.isRecognizing) {
+      this.recognition.start();
+      this.isRecognizing = true;
+      recordButton.classList.add('recording');
+    } else {
+      this.recognition.stop();
+      this.isRecognizing = false;
+      recordButton.classList.remove('recording');
+    }
+  }
+
+  toggleVisionModel(model: string) {
+    this.visionModelActive = model;
+    alert('Modelo de visión activado: ${model}');
   }
 }
 
