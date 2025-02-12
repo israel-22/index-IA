@@ -179,8 +179,8 @@ input[type="file"] {
 
 /* Botón para subir la imagen */
 button.upload-btn {
-  background: #4caf50;
-  color: white;
+  background: #af5b4c;
+  color: rgb(49, 47, 47);
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
@@ -195,7 +195,8 @@ button.upload-btn {
 }
 
 button.upload-btn:hover {
-  background: #388e3c;
+  background: #e92c25;
+  color:rgb(49, 47, 47);
   transform: scale(1.05);
 }
 
