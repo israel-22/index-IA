@@ -17,7 +17,7 @@ export class AppComponent {
   title = 'inteligencia-artificial';
 }
 
-@NgModule({
+/*@NgModule({
   imports: [
     BrowserModule,
     FormsModule,
@@ -26,6 +26,6 @@ export class AppComponent {
 }
 )
 export class AppModule { }
-
+*/
 
 

@@ -1,39 +1,4 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// chatbot.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -42,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { apiService } from '../service/api.service';  // Importando el servicio
 
 @Component({
   selector: 'app-chatbot',
@@ -52,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class ChatbotComponent implements OnInit {
   userInput: string = '';
-  messages: { text: string; sender: 'user' | 'bot'; time?: string }[] = []; // Agregamos la propiedad `time`
+  messages: { text: string; sender: 'user' | 'bot'; time?: string }[] = [];
   selectedFile: File | null = null;
   imagePreview: string | null = null;
   selectedFileName: string = '';
@@ -63,32 +29,18 @@ export class ChatbotComponent implements OnInit {
   private recognition: any;
   private isRecognizing: boolean = false;
 
-  responses: { [key: string]: string } = {
-    "hola": "¡Hola! ¿En qué puedo ayudarte?",
-    "cómo estás": "Estoy bien, gracias por preguntar. Soy un chatbot, ¡pero estoy aquí para ayudarte!",
-    "como estas": "Soy un chatbot, ¡pero estoy aquí para ayudarte!",
-    "que puedes hacer": "Puedo responder a preguntas de salud, como 'hola', 'cómo estás', 'adiós' o 'adios'.",
-    "quien eres": "Soy tu papi chatbot, jajajajaja!!!! No, solo soy tu papi chatbot",
-    "estas vivo": "Solo en tu corazon guapo, tu papi chatbot es el mejor de todos tus panas, niñ@ rata :)",
-    "adiós": "Hasta luego, que tengas un buen día.",
-    "adios": "Hasta luego, que tengas un buen día.",
-    "hola guapo": "Como esta mi rey, cuentame mijo en que te ayudo:) ",
-    "te quiero": "te lo agradesco mucho, pero te recomiendo visitar un Psiquiatra, hay cuatro sanatorios serca de ti",
-    "default": "No entiendo tu pregunta, intenta con otra."
-  };
+  constructor(private apiService: apiService) {}
 
   ngOnInit() {
     this.initializeRecognition();
   }
 
-  // Función para obtener la fecha y hora actual
   getCurrentTime(): string {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0'); // Asegura que la hora tenga dos dígitos
-    const minutes = now.getMinutes().toString().padStart(2, '0'); // Asegura que los minutos tengan dos dígitos
-    return `${hours}:${minutes}`; // Devuelve la hora en formato HH:mm
+    const date = new Date();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
   }
-
 
   initializeRecognition() {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -131,22 +83,28 @@ export class ChatbotComponent implements OnInit {
     }
   }
 
+  // Método actualizado para enviar el mensaje usando postData
   sendMessage() {
     if (this.userInput.trim() === '') return;
 
-    const userMessage = this.userInput.toLowerCase();
-    // Llamamos a la función para obtener la hora formateada
-    this.messages.push({ text: this.userInput, sender: 'user', time: this.getCurrentTime() });
+    const userMessage = this.userInput;
+    this.messages.push({ text: userMessage, sender: 'user', time: this.getCurrentTime() });
     this.userInput = '';
 
-    const response = this.responses[userMessage] || this.responses["default"];
-    setTimeout(() => {
-      // Llamamos a la función para obtener la hora formateada para el bot
-      this.messages.push({ text: response, sender: 'bot', time: this.getCurrentTime() });
-    }, 500);
+    // Llamamos a la API utilizando postData y enviamos el mensaje del usuario
+    this.apiService.postData({ message: userMessage }).subscribe(
+      (response: any) => {
+        // Suponemos que la respuesta tiene una propiedad 'reply' con la respuesta del bot
+        this.messages.push({ text: response.reply, sender: 'bot', time: this.getCurrentTime() });
+      },
+      (error: any) => {
+        console.error('Error al obtener respuesta del bot:', error);
+        this.messages.push({ text: 'Lo siento, algo salió mal. Intenta nuevamente.', sender: 'bot', time: this.getCurrentTime() });
+      }
+    );
   }
 
-
+  // Método para manejar la carga de archivos de imagen
   onFileSelected(event: any) {
     const file = event.target.files[0];
 
@@ -166,14 +124,14 @@ export class ChatbotComponent implements OnInit {
   uploadImage() {
     if (this.selectedFile) {
       console.log('Imagen subida:', this.selectedFile.name);
-      this.messages.push({ sender: 'user', text: `Imagen subida: ${this.selectedFile.name}`, time: this.getCurrentTime() }); // Agregar la hora al mensaje
+      this.messages.push({ sender: 'user', text: `Imagen subida: ${this.selectedFile.name}`, time: this.getCurrentTime() });
       this.selectedFile = null;
       this.imagePreview = null;
     }
   }
+
   toggleVisionModel(model: string) {
     this.visionModelActive = model;
-    alert('Modelo de visión activado: ${model}');
+    alert(`Modelo de visión activado: ${model}`);
   }
-
 }

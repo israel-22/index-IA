@@ -6,6 +6,7 @@
     </mat-toolbar>
 
 
+
     <!-- Mensajes del chat -->
     <div class="chat-container">
       <div *ngFor="let message of messages" class="chat-message" [ngClass]="{'user': message.sender === 'user', 'bot': message.sender === 'bot'}">
