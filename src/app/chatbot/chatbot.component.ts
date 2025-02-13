@@ -83,12 +83,12 @@ export class ChatbotComponent implements OnInit {
 
   // Función para obtener la fecha y hora actual
   getCurrentTime(): string {
-    const date = new Date();
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-    return `${hours}:${minutes}:${seconds}`;
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0'); // Asegura que la hora tenga dos dígitos
+    const minutes = now.getMinutes().toString().padStart(2, '0'); // Asegura que los minutos tengan dos dígitos
+    return `${hours}:${minutes}`; // Devuelve la hora en formato HH:mm
   }
+
 
   initializeRecognition() {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -135,15 +135,17 @@ export class ChatbotComponent implements OnInit {
     if (this.userInput.trim() === '') return;
 
     const userMessage = this.userInput.toLowerCase();
-    const currentTime = this.getCurrentTime(); // Obtener la hora actual
-    this.messages.push({ text: this.userInput, sender: 'user', time: currentTime }); // Agregar la hora al mensaje
+    // Llamamos a la función para obtener la hora formateada
+    this.messages.push({ text: this.userInput, sender: 'user', time: this.getCurrentTime() });
     this.userInput = '';
 
     const response = this.responses[userMessage] || this.responses["default"];
     setTimeout(() => {
-      this.messages.push({ text: response, sender: 'bot', time: this.getCurrentTime() }); // Agregar la hora al mensaje del bot
+      // Llamamos a la función para obtener la hora formateada para el bot
+      this.messages.push({ text: response, sender: 'bot', time: this.getCurrentTime() });
     }, 500);
   }
+
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
