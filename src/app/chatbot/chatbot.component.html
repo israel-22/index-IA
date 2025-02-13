@@ -12,6 +12,7 @@
       <div *ngFor="let message of messages" class="chat-message" [ngClass]="{'user': message.sender === 'user', 'bot': message.sender === 'bot'}">
         <mat-card class="message-bubble">
           <p>{{ message.text }}</p>
+          <small class="message-time">{{ message.time }}</small> <!-- Mostrar la hora -->
         </mat-card>
       </div>
     </div>
@@ -23,7 +24,7 @@
         <mat-label>Escribe tu mensaje</mat-label>
         <input matInput [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
       </mat-form-field>
-      <button (click)="sendMessage()" style="margin-right: 15px;">
+      <button class="btn-enviar" (click)="sendMessage()" style="margin-right: 15px; padding-left: 5px">
         <div class="text">
           <span>Enviar</span>
         </div>
@@ -47,8 +48,8 @@
         </svg>
       </button>
       <div class="audio-record" style="display: flex; justify-content: space-evenly; align-items: center; gap: 10px; margin-bottom: 20px;">
-        <button id="recordButton" (click)="toggleRecording()" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease-in-out;">🎤</button>
-      </div>
+        <button id="recordButton" style="padding: 10px 20px; font-size: 16px; color: white; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease-in-out;" (click)="toggleRecording()">🎤</button>
+  </div>
       <br><br>
       </div>
       <br>
@@ -66,26 +67,30 @@
     <!-- Apartado para subir imágenes y cargar su nombre -->
   <div class="upload-container">
     <div class="upload-section">
-      <p>📷 Sube una imagen divertida:</p>
+      <p style="color: black;">📷 Sube una imagen divertida:</p>
       <label class="upload-label">
         <mat-icon>cloud_upload</mat-icon> Seleccionar Imagen
         <input type="file" (change)="onFileSelected($event)" accept="image/*">
       </label>
+      <br>
+      <!-- Botón de eliminar -->
+<button class="delete-button" mat-raised-button (click)="uploadImage()" [disabled]="!selectedFileName">
+  <span class="text">Subir imagen</span>
+</button>
 
-      <button class="upload-btn" mat-raised-button (click)="uploadImage()" [disabled]="!selectedFileName">
-        <mat-icon>file_upload</mat-icon> Eliminar
-      </button>
+
+
 
       <!-- Mostrar el nombre y tipo del archivo seleccionado -->
       <div *ngIf="selectedFileName">
-        <p>📄 Archivo seleccionado:</p>
+        <p  style="color: black;">📄 Archivo seleccionado:</p>
         <p class="file-info">{{ selectedFileName }} ({{ selectedFileType }})</p>
       </div>
     </div>
 
     <!-- Vista previa de la imagen subida -->
     <div *ngIf="imagePreview" class="image-preview-container">
-      <p style="color: aliceblue;">🎨 Vista previa:</p>
+      <p style="color: rgb(2, 2, 2);">🎨 Vista previa:</p>
       <img [src]="imagePreview" alt="Imagen subida" class="image-preview">
     </div>
   </div>
